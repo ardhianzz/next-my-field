@@ -10,33 +10,51 @@ import logoPerushaan from '../public/image/logo.jpg';
 const Heros = ({ title = "Hore" , isLoad}) => {
 
   const showImage = [
-        "url('/slideshow/show1.JPG')",
-        "url('/slideshow/show2.JPG')",
-        "url('/slideshow/show3.JPG')",
-        "url('/slideshow/show4.JPG')",
-        "url('/slideshow/show5.JPG')",
+        "/slideshow/show1.JPG",
+        "/slideshow/show2.JPG",
+        "/slideshow/show3.JPG",
+        "/slideshow/show4.JPG",
+        "/slideshow/show5.JPG",
+        //"url('/slideshow/show1.JPG')",
+        //"url('/slideshow/show2.JPG')",
+        //"url('/slideshow/show3.JPG')",
+        //"url('/slideshow/show4.JPG')",
+        //"url('/slideshow/show5.JPG')",
       ];
   
   const [show, setShow] = useState(showImage[0]);
   const [counter, setCounter] = useState(0);
 
-  const changeImage = () => {
-    setShow(showImage[counter+1]);
-  }
 
-  if(counter <= showImage.length){
-    setTimeout(changeImage, 1000);
-  }
+
+
+  useEffect(() => {
+    const interval = setInterval(() => { 
+      setCounter((prev) => (prev+1 ) % showImage.length);
+    }, 5000);
+    
+
+    // const effetOut = setTimeout(() => setEffect(! effect), 4000);
+
+
+    setShow(showImage[counter]);
+    return () => {
+      clearInterval(interval);
+    }
+  }, [counter]);
   
 
 
 
   return (
-    <div className='flex flex-col h-full w-full px-32 py-10'>
-      <div  className='flex w-full h-full bg-blue-950 rounded-3xl bg-cover drop-shadow-xl border-4 border-blue-600' 
-            style={{ backgroundImage: show }}>
-
+    <div className='flex flex-col h-full w-full px-32 bg-slate-500 overflow-hidden'>
+      <div className={``}>
+        <img src={show} alt='gambar' className={`h-full w-full`} />
       </div>
+      
+      {/* <div  className='flex w-full h-full bg-blue-950 bg-cover' 
+            style={{ backgroundImage: show }}>
+      </div> */}
     </div>
   );
 };
