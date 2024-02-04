@@ -24,33 +24,35 @@ const Heros = ({ title = "Hore" , isLoad}) => {
   
   const [show, setShow] = useState(showImage[0]);
   const [counter, setCounter] = useState(0);
+  const [effect, setEffect] = useState(false);
 
-
-
+  const showInt = 5000;
 
   useEffect(() => {
     const interval = setInterval(() => { 
       setCounter((prev) => (prev+1 ) % showImage.length);
-    }, 5000);
-    
-
-    // const effetOut = setTimeout(() => setEffect(! effect), 4000);
-
-
+    }, showInt);
     setShow(showImage[counter]);
+
+    setTimeout(()=>{
+      setEffect(true);  
+    }, showInt-1000);
+
+
     return () => {
+      setEffect(false);
       clearInterval(interval);
     }
   }, [counter]);
   
 
-
-
   return (
-    <div className='flex flex-col h-full w-full px-32 bg-slate-500 overflow-hidden'>
-      <div className={``}>
+    <div className='flex flex-col h-full w-full px-32 bg-gray-50 overflow-hidden'>
+
+      <div className={`h-full w-full transition-opacity duration-[1200ms] ${effect? "opacity-30" : "opacity-100"} `}>
         <img src={show} alt='gambar' className={`h-full w-full`} />
       </div>
+
       
       {/* <div  className='flex w-full h-full bg-blue-950 bg-cover' 
             style={{ backgroundImage: show }}>
